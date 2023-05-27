@@ -1,4 +1,4 @@
-# ${\color{#676ddf}CHATIFY}$
+# ${\color{#676ddf}Solar Ladder Company Internship Task - I}$
 
 
 ## ${\color{#87CEEB}Created \space using \space :}$
@@ -6,16 +6,12 @@
 - ${\color{#80ED99}NodeJS}$
 - ${\color{#80ED99}ExpressJS}$
 - ${\color{#80ED99}ReactJS \space (Material \space UI)}$
-- ${\color{#80ED99}SocketIO}$
+
 
 ## ${\color{#87CEEB}Functionality}$
-- ${\color{#FAC748}Authentication}$
-- ${\color{#FAC748}One \space on \space One \space chat}$
-- ${\color{#FAC748}Group \space Chat}$
-- ${\color{#EF476F}Add \space and \space Remove \space from \space Group \space (Only \space Group \space Admin)}$
-- ${\color{#EF476F}End \space to \space End \space Encryption}$
-- ${\color{#EF476F}Typing \space Indicator}$
-- ${\color{#EF476F}Status \space Indicator \space (Send, \space Deliver \space or \space Seen)}$
-- ${\color{#EF476F}Real \space Time \space Notification}$
-- ${\color{#FAC748}Real \space Time \space Messaging}$
-- ${\color{#FAC748}Search \space other \space User}$
+- ${\color{#FAC748}Login \space SignUP \space Authentication \space with \space Image}$
+- ${\color{#FAC748}Creating \space a \space Books \space Tab \space with \space Inventory \space Section}$
+- ${\color{#FAC748}Allowing \space Addition \space of \space Inventory \space Item}$
+- ${\color{#FAC748}Allowing \space editing \space of \space the \space Inventory \space item}$
+- ${\color{#FAC748}Allowing \space deletion \space of \space Inventory \space Item}$
+- ${\color{#FAC748}Allowing \space Filtering \space Based on \space Low \space stock \space and \space low \space stock \space warning}$
