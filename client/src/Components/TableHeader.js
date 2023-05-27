@@ -76,7 +76,12 @@ const TableHeader = (props) => {
                         checked={rowCount > 0 && numSelected === rowCount}
                         onChange={onSelectAllClick}
                         inputProps={{ "aria-label": "select all desserts" }}
-                        className="cstchk"
+                        // className="cstchk"
+                        sx={{
+                            "&>.css-i4bv87-MuiSvgIcon-root": {
+                                fill: "#fff"
+                            }
+                        }}
                     />
                 </TableCell>
                 {headCells.map((headCell) => (
@@ -90,6 +95,20 @@ const TableHeader = (props) => {
                             active={orderBy === headCell.id}
                             direction={orderBy === headCell.id ? order : "asc"}
                             onClick={createSortHandler(headCell.id)}
+                            sx={{
+                                color: "#fff",
+                                fontWeight: 800,
+                                fontSize: 16,
+                                "&:hover": {
+                                    color: "#fff"
+                                },
+                                "&.Mui-active": {
+                                    color: "#fff"
+                                },
+                                "&>svg": {
+                                    fill: "#fff",
+                                }
+                            }}
                         >
                             {headCell.label}
                             {orderBy === headCell.id ? (
