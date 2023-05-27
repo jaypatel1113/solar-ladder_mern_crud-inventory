@@ -1,4 +1,4 @@
-# ${\color{#676ddf}Solar Ladder Company Internship Task - I}$
+# ${\color{#676ddf}Solar \space Ladder \space Company \space Internship \space Task \space - \space I}$
 
 
 ## ${\color{#87CEEB}Created \space using \space :}$
