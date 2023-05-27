@@ -78,7 +78,7 @@ const TableHeader = (props) => {
                         inputProps={{ "aria-label": "select all desserts" }}
                         // className="cstchk"
                         sx={{
-                            "&>.css-i4bv87-MuiSvgIcon-root": {
+                            "&>svg": {
                                 fill: "#fff"
                             }
                         }}
