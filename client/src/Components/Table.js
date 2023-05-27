@@ -64,7 +64,7 @@ const TableData = () => {
     const [rowsToShow, setRowsToShow] = useState([]);
     const [toggle, setToggle] = useState(false);
 
-    const {books, fetch} = useSelector((state) => state.bookInventory);
+    const {books, fetch, loading} = useSelector((state) => state.bookInventory);
     
     const dispatch = useDispatch();
 
@@ -117,9 +117,9 @@ const TableData = () => {
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-    var visibleRows = useMemo(() => {
+    var visibleRows = useMemo(() => 
         stableSort(rows, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-    }, [order, orderBy, page, rowsPerPage, rows]);
+    , [order, orderBy, page, rowsPerPage, rows]);
 
     useEffect(() => {
         setRowsToShow(visibleRows);
@@ -174,150 +174,168 @@ const TableData = () => {
                     handleCategoryClick={handleCategoryClick}
                     toggle={toggle}
                 />
-                <TableContainer>
-                    <Table
-                        sx={{ minWidth: 750 }}
-                        aria-labelledby="tableTitle"
-                        size={"medium"}
-                    >
-                        {(rows && rows.length > 0) ? (
-                        <>
-                            <TableHeader
-                                numSelected={selected.length}
-                                order={order}
-                                orderBy={orderBy}
-                                onSelectAllClick={handleSelectAllClick}
-                                onRequestSort={handleRequestSort}
-                                rowCount={rows?.length}
-                            />
-                            <TableBody>
-                                {rowsToShow.map((row, index) => {
-                                    const isItemSelected = isSelected(row._id);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
+                {
+                    loading ? (
+                        <Box sx={{
+                                display: "flex", 
+                                justifyContent: "center", 
+                                alignItems: "center", 
+                                padding: "50px 20px", 
+                                fontSize: 24, 
+                                fontWeight: 800, 
+                                color: "#3e55b9"
+                            }}
+                        >
+                            Loading Data...
+                        </Box>
+                    ) : (
+                        
+                        <TableContainer>
+                            <Table
+                                sx={{ minWidth: 750 }}
+                                aria-labelledby="tableTitle"
+                                size={"medium"}
+                            >
+                                {(rows && rows.length > 0) ? (
+                                <>
+                                    <TableHeader
+                                        numSelected={selected.length}
+                                        order={order}
+                                        orderBy={orderBy}
+                                        onSelectAllClick={handleSelectAllClick}
+                                        onRequestSort={handleRequestSort}
+                                        rowCount={rows?.length}
+                                    />
+                                    <TableBody>
+                                        {rowsToShow?.map((row, index) => {
+                                            const isItemSelected = isSelected(row._id);
+                                            const labelId = `enhanced-table-checkbox-${index}`;
 
-                                    return (
-                                        <TableRow
-                                            hover
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.name}
-                                            selected={isItemSelected}
-                                            sx={{ cursor: "pointer", height: 53 }}
-                                        >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    color="primary"
-                                                    checked={isItemSelected}
-                                                    inputProps={{ "aria-labelledby": labelId }}
-                                                    onClick={(event) => handleClick(event, row._id)}
-                                                />
-                                            </TableCell>
-                                            <TableCell
-                                                component="th"
-                                                id={labelId}
-                                                scope="row"
-                                                padding="none"
-                                            >
-                                                {row.item_name}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {row.item_code}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {row.category}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {row.opening_stock} {row.stock_unit.toUpperCase()}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {row.stock_on_hold} {row.stock_unit.toUpperCase()}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                ₹ {row.stock_value}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                ₹ {row.purchase_price}
-                                            </TableCell>
-                                            <TableCell align="right" sx={{display: "flex", justifyContent: "space-between"}}>
-                                                <AddNewInventoryModel
-                                                    setFetchAgain={setFetchAgain}
-                                                    fetchAgain={fetchAgain}
-                                                    formdata={row}
-                                                    edit={true}
+                                            return (
+                                                <TableRow
+                                                    hover
+                                                    role="checkbox"
+                                                    aria-checked={isItemSelected}
+                                                    tabIndex={-1}
+                                                    key={row.name}
+                                                    selected={isItemSelected}
+                                                    sx={{ cursor: "pointer", height: 53 }}
                                                 >
-                                                    <IconButton
-                                                        aria-label="edit"
-                                                        size="small"
-                                                        sx={{ color: "#3e55b9" }}
+                                                    <TableCell padding="checkbox">
+                                                        <Checkbox
+                                                            color="primary"
+                                                            checked={isItemSelected}
+                                                            inputProps={{ "aria-labelledby": labelId }}
+                                                            onClick={(event) => handleClick(event, row._id)}
+                                                        />
+                                                    </TableCell>
+                                                    <TableCell
+                                                        component="th"
+                                                        id={labelId}
+                                                        scope="row"
+                                                        padding="none"
                                                     >
-                                                        <EditIcon fontSize="small" />
-                                                    </IconButton>
-                                                </AddNewInventoryModel>
-                                                {row.opening_stock < row.low_cost_unit && (
-                                                        <IconButton
-                                                            aria-label=""
-                                                            size="small"
-                                                            sx={{
-                                                                color: "#f00",
-                                                            }}
+                                                        {row.item_name}
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        {row.item_code}
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        {row.category}
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        {row.opening_stock} {row.stock_unit.toUpperCase()}
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        {row.stock_on_hold} {row.stock_unit.toUpperCase()}
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        ₹ {row.stock_value}
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        ₹ {row.purchase_price}
+                                                    </TableCell>
+                                                    <TableCell align="right" sx={{display: "flex", justifyContent: "space-between"}}>
+                                                        <AddNewInventoryModel
+                                                            setFetchAgain={setFetchAgain}
+                                                            fetchAgain={fetchAgain}
+                                                            formdata={row}
+                                                            edit={true}
+                                                        >
+                                                            <IconButton
+                                                                aria-label="edit"
+                                                                size="small"
+                                                                sx={{ color: "#3e55b9" }}
                                                             >
-                                                            <WarningIcon fontSize="small" />
-                                                        </IconButton>
-                                                )}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                <AdjustStockModel
-                                                    setFetchAgain={setFetchAgain}
-                                                    fetchAgain={fetchAgain}
-                                                    formdata={row}
-                                                    edit={true}
-                                                >
-                                                    <Button
-                                                        size="small"
-                                                        variant="outlined"
-                                                        sx={{ 
-                                                            fontSize: 12, 
-                                                            borderWidth: 2,
-                                                            "&:hover": {
-                                                                borderWidth: 2,
-                                                            } 
-                                                        }}
-                                                    >
-                                                        Adjust Stock
-                                                    </Button>
-                                                </AdjustStockModel>
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                                {emptyRows > 0 && (
-                                    <TableRow
-                                        style={{
-                                            height: 53 * emptyRows,
+                                                                <EditIcon fontSize="small" />
+                                                            </IconButton>
+                                                        </AddNewInventoryModel>
+                                                        {row.opening_stock < row.low_cost_unit && (
+                                                                <IconButton
+                                                                    aria-label=""
+                                                                    size="small"
+                                                                    sx={{
+                                                                        color: "#f00",
+                                                                    }}
+                                                                    >
+                                                                    <WarningIcon fontSize="small" />
+                                                                </IconButton>
+                                                        )}
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        <AdjustStockModel
+                                                            setFetchAgain={setFetchAgain}
+                                                            fetchAgain={fetchAgain}
+                                                            formdata={row}
+                                                            edit={true}
+                                                        >
+                                                            <Button
+                                                                size="small"
+                                                                variant="outlined"
+                                                                sx={{ 
+                                                                    fontSize: 12, 
+                                                                    borderWidth: 2,
+                                                                    "&:hover": {
+                                                                        borderWidth: 2,
+                                                                    } 
+                                                                }}
+                                                            >
+                                                                Adjust Stock
+                                                            </Button>
+                                                        </AdjustStockModel>
+                                                    </TableCell>
+                                                </TableRow>
+                                            );
+                                        })}
+                                        {emptyRows > 0 && (
+                                            <TableRow
+                                                style={{
+                                                    height: 53 * emptyRows,
+                                                }}
+                                            >
+                                                <TableCell colSpan={6} />
+                                            </TableRow>
+                                        )}
+                                    </TableBody>
+                                </>
+                                ) : (
+                                    <Box sx={{
+                                            display: "flex", 
+                                            justifyContent: "center", 
+                                            alignItems: "center", 
+                                            padding: "50px 20px", 
+                                            fontSize: 24, 
+                                            fontWeight: 800, 
+                                            color: "#3e55b9"
                                         }}
                                     >
-                                        <TableCell colSpan={6} />
-                                    </TableRow>
+                                        No data found
+                                    </Box>
                                 )}
-                            </TableBody>
-                        </>
-                        ) : (
-                            <Box sx={{
-                                    display: "flex", 
-                                    justifyContent: "center", 
-                                    alignItems: "center", 
-                                    padding: "50px 20px", 
-                                    fontSize: 24, 
-                                    fontWeight: 800, 
-                                    color: "#3e55b9"
-                                }}
-                            >
-                                No data found
-                            </Box>
-                        )}
-                    </Table>
-                </TableContainer>
+                            </Table>
+                        </TableContainer>
+                    )
+                }
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
