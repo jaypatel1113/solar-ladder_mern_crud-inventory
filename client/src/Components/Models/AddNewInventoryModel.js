@@ -87,11 +87,11 @@ const AddNewInventoryModel = ({ children, fetchAgain, setFetchAgain, formdata={}
         } else {
             await dispatch(addBook(data));
         }
+        setOpen(false)
         const alldata = await dispatch(fetchBooks());
         setRows(alldata);
         
-        handleClose();
-        setFetchAgain(!fetchAgain)
+        setFetchAgain(!fetchAgain);
         setData({as_of_date: new Date().toISOString().substring(0, 10)})
     };
     
