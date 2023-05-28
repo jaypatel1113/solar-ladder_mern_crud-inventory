@@ -129,7 +129,6 @@ const TableData = () => {
     const handleDelete = async () => {
         await dispatch(deleteItems(selected));
         await dispatch(fetchBooks());
-        setRows(books);
         setSelected([]);
     }
 
