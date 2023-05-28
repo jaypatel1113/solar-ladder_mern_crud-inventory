@@ -64,7 +64,7 @@ const TableData = () => {
     const [rowsToShow, setRowsToShow] = useState([]);
     const [toggle, setToggle] = useState(false);
 
-    const {books, fetch, loading} = useSelector((state) => state.bookInventory);
+    const {fetch, loading} = useSelector((state) => state.bookInventory);
     
     const dispatch = useDispatch();
 
@@ -128,7 +128,8 @@ const TableData = () => {
     // delete
     const handleDelete = async () => {
         await dispatch(deleteItems(selected));
-        await dispatch(fetchBooks());
+        const alldata = await dispatch(fetchBooks());
+        setRows(alldata);
         setSelected([]);
     }
 
@@ -260,6 +261,7 @@ const TableData = () => {
                                                             fetchAgain={fetchAgain}
                                                             formdata={row}
                                                             edit={true}
+                                                            setRows={setRows}
                                                         >
                                                             <IconButton
                                                                 aria-label="edit"
@@ -287,6 +289,7 @@ const TableData = () => {
                                                             fetchAgain={fetchAgain}
                                                             formdata={row}
                                                             edit={true}
+                                                            setRows={setRows}
                                                         >
                                                             <Button
                                                                 size="small"

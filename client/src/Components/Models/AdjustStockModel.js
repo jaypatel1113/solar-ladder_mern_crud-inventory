@@ -7,7 +7,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import DownloadDoneIcon from "@mui/icons-material/DownloadDone";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 
-import { updateStock } from "../../Redux/Actions/BookInventory";
+import { fetchBooks, updateStock } from "../../Redux/Actions/BookInventory";
 
 const style = {
     position: "absolute",
@@ -38,7 +38,7 @@ const style = {
     },
 };
 
-const AdjustStockModel = ({ children, fetchAgain, setFetchAgain, formdata = {} }) => {
+const AdjustStockModel = ({ children, fetchAgain, setFetchAgain, formdata = {}, setRows }) => {
     const [open, setOpen] = useState(false);
     const [detail, setDetails] = useState({});
 
@@ -85,6 +85,8 @@ const AdjustStockModel = ({ children, fetchAgain, setFetchAgain, formdata = {} }
                 remark: detail.remark,
             })
         );
+        const alldata = await dispatch(fetchBooks());
+        setRows(alldata);
 
         handleClose();
         setFetchAgain(!fetchAgain);

@@ -7,7 +7,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import DownloadDoneIcon from "@mui/icons-material/DownloadDone";
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
-import { addBook, editBook } from "../../Redux/Actions/BookInventory";
+import { addBook, editBook, fetchBooks } from "../../Redux/Actions/BookInventory";
 
 const style = {
     position: "absolute",
@@ -38,7 +38,7 @@ const style = {
     },
 };
 
-const AddNewInventoryModel = ({ children, fetchAgain, setFetchAgain, formdata={}, edit=false }) => {
+const AddNewInventoryModel = ({ children, fetchAgain, setFetchAgain, formdata={}, edit=false, setRows }) => {
     const [open, setOpen] = useState(false);
     const [data, setData] = useState(formdata);
 
@@ -87,6 +87,9 @@ const AddNewInventoryModel = ({ children, fetchAgain, setFetchAgain, formdata={}
         } else {
             await dispatch(addBook(data));
         }
+        const alldata = await dispatch(fetchBooks());
+        setRows(alldata);
+        
         handleClose();
         setFetchAgain(!fetchAgain)
         setData({as_of_date: new Date().toISOString().substring(0, 10)})
