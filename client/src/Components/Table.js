@@ -64,7 +64,7 @@ const TableData = () => {
     const [rowsToShow, setRowsToShow] = useState([]);
     const [toggle, setToggle] = useState(false);
 
-    const {fetch, loading} = useSelector((state) => state.bookInventory);
+    const {fetch, anotherLoading} = useSelector((state) => state.bookInventory);
     
     const dispatch = useDispatch();
 
@@ -160,7 +160,7 @@ const TableData = () => {
             setRows(alldata);
         }
         fetchData();
-    }, [fetchAgain, fetch, dispatch]);
+    }, [fetch, dispatch]);
 
     return (
         <Box sx={{ width: "100%", mt: 2 }}>
@@ -175,7 +175,7 @@ const TableData = () => {
                     toggle={toggle}
                 />
                 {
-                    loading ? (
+                    anotherLoading ? (
                         <Box sx={{
                                 display: "flex", 
                                 justifyContent: "center", 

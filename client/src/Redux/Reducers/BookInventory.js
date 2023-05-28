@@ -4,18 +4,19 @@ const initialState = {
     loading: false,
     books: [], 
     fetch: true,
+    anotherLoading: false,
 };
 
 export const bookInventoryReducer = createReducer(initialState, {
     FETCH_BOOK_REQUEST: (state) => {
-        state.loading = true;
+        state.anotherLoading = true;
     },
     FETCH_BOOK_SUCCESS: (state, action) => {
-        state.loading = false;
+        state.anotherLoading = false;
         state.books = action.payload;
     },
     FETCH_BOOK_FAILURE: (state, action) => {
-        state.loading = false;
+        state.anotherLoading = false;
         state.error = action.payload;
     },
 
