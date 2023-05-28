@@ -17,7 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 const App = () => {
-    const { message, error, isAuthenticated, loading, isLogin } = useSelector((state) => state.user);
+    const { message, error, isAuthenticated, initalLoading, isLogin } = useSelector((state) => state.user);
     const { message: msg, error: err, fetch } = useSelector((state) => state.bookInventory);
 
     const dispatch = useDispatch();
@@ -55,7 +55,7 @@ const App = () => {
 
     return (
         <>
-            {loading ? <Loading /> : (
+            {initalLoading ? <Loading /> : (
                 <Routes>
                     <Route path="/" element={isAuthenticated ? <Navigate to="/inventory" /> : <Home />}/>
                     {/* <Route path="/inventory" element={<Inventory />} /> */}
